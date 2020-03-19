@@ -12,8 +12,7 @@ library(shiny)
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
     tags$head(tags$script(src = "message-handler.js")),
-    tags$audio(src = "test.mp3", type = "audio/mp3", autoplay = NA, controls = NA),
-    
+
     # Application title
     titlePanel("Révision des caractères chinois"),
 

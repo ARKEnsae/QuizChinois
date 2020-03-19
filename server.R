@@ -20,7 +20,7 @@ shinyServer(function(input, output) {
             url <- sprintf("https://translate.google.com.vn/translate_tts?ie=UTF-8&q=%s&tl=zh-CN&client=tw-ob",
                            gsub("(\\()|(\\))", "", mots[randomVals(), 2])
                            )
-            print(getwd())
+            #print(getwd())
             # Define the temporary directory and download the data
             dest_path <- "www/temp.mp3"
             download.file(url ,destfile = dest_path)
