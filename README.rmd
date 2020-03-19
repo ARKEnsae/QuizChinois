@@ -1,0 +1,20 @@
+---
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Quiz révision chinois
+
+Pour lancer l'application, le plus simple est d'ouvrir RStudio et de lancer la commande suivante :
+
+```{r,eval = FALSE}
+library(shiny)
+runGitHub("QuizChinois", "EnsaeKARLAQLT")
+```
+
+Ou sinon cliquer sur ce lien (possiblement lent) : https://aqlt.shinyapps.io/quizchinois/
+
+
