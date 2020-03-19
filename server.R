@@ -16,10 +16,20 @@ shinyServer(function(input, output) {
     r <- reactiveValues(afficherReponse = FALSE)
     choixMode <- reactive({
         r$afficherReponse <- FALSE
+        if(input$question == "Son -> Français"){
+            url <- sprintf("https://translate.google.com.vn/translate_tts?ie=UTF-8&q=%s&tl=zh-CN&client=tw-ob",
+                           gsub("(\\()|(\\))", "", mots[randomVals(), 2])
+                           )
+            print(getwd())
+            # Define the temporary directory and download the data
+            dest_path <- "www/temp.mp3"
+            download.file(url ,destfile = dest_path)
+        }
         switch(input$question,
                "Français -> Pinyin" = c(4),
                "Pinyin -> Français" = c(3),
-               "Chinois -> Français" = c(2))
+               "Chinois -> Français" = c(2),
+               "Son -> Français" = c(-1))
     })
     randomVals <- eventReactive(input$nouveauMot, {
         r$afficherReponse <- FALSE
@@ -37,6 +47,15 @@ shinyServer(function(input, output) {
             ""
         }
     }) 
+    
+    
+    observeEvent(input$playsound, {
+        insertUI(selector = "#playsound",
+                 where = "afterEnd",
+                 ui = tags$audio(src  = "temp.mp3", type = "audio/mp3", autoplay = NA, controls = NA, style="display:none;")
+        )
+    })
+
     randomVals <- eventReactive(input$nouveauMot, {
         r$afficherReponse <- FALSE
         sample.int(nrow(mots), size = 1)
@@ -46,10 +65,15 @@ shinyServer(function(input, output) {
     })
     output$motADeviner <- renderText({ 
         #paste0("test", mot_hasard)
-        paste0("Le mot à deviner est :<br>",
-               "<font size=\"",input$size,"px\">",
-              as.character(mots[randomVals(), choixMode()]),
-              "</font><br><br><br><br>")
+        if(choixMode() >0){
+            paste0("Le mot à deviner est :<br>",
+                   "<font size=\"",input$size,"px\">",
+                   as.character(mots[randomVals(), choixMode()]),
+                   "</font><br><br><br>")
+        }else{
+            ""
+        }
+        
     })
 
 })
