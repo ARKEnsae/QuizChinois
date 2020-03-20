@@ -6,7 +6,7 @@ lancer la commande suivante :
 
 ``` r
 library(shiny)
-runGitHub("QuizChinois", "EnsaeKARLAQLT")
+runGitHub("QuizChinois", "ARKEnsae")
 ```
 
 Ou sinon cliquer sur ce lien (possiblement lent) :

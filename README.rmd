@@ -12,7 +12,7 @@ Pour lancer l'application, le plus simple est d'ouvrir RStudio et de lancer la c
 
 ```{r,eval = FALSE}
 library(shiny)
-runGitHub("QuizChinois", "EnsaeKARLAQLT")
+runGitHub("QuizChinois", "ARKEnsae")
 ```
 
 Ou sinon cliquer sur ce lien (possiblement lent) : https://aqlt.shinyapps.io/quizchinois/
