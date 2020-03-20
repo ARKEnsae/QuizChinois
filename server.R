@@ -15,6 +15,7 @@ mots <- read_excel("data/mots.xlsx")
 shinyServer(function(input, output) {
     r <- reactiveValues(afficherReponse = FALSE)
     choixMode <- reactive({
+        file.remove("www/temp.mp3")
         r$afficherReponse <- FALSE
         if(input$question == "Son -> Français"){
             url <- sprintf("https://translate.google.com.vn/translate_tts?ie=UTF-8&q=%s&tl=zh-CN&client=tw-ob",
