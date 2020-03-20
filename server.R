@@ -13,18 +13,14 @@ mots <- read_excel("data/mots.xlsx")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-    r <- reactiveValues(afficherReponse = FALSE)
+    r <- reactiveValues(afficherReponse = FALSE,
+                        urlSon = "")
     choixMode <- reactive({
-        file.remove("www/temp.mp3")
         r$afficherReponse <- FALSE
         if(input$question == "Son -> Français"){
-            url <- sprintf("https://translate.google.com.vn/translate_tts?ie=UTF-8&q=%s&tl=zh-CN&client=tw-ob",
-                           gsub("(\\()|(\\))", "", mots[randomVals(), 2])
-                           )
-            #print(getwd())
-            # Define the temporary directory and download the data
-            dest_path <- "www/temp.mp3"
-            download.file(url ,destfile = dest_path)
+            r$pathFichier <- sprintf("%s.mp3", randomVals())
+        }else{
+            r$pathFichier <- sprintf("%s.mp3", -1)
         }
         switch(input$question,
                "Français -> Pinyin" = c(4),
@@ -53,14 +49,11 @@ shinyServer(function(input, output) {
     observeEvent(input$playsound, {
         insertUI(selector = "#playsound",
                  where = "afterEnd",
-                 ui = tags$audio(src  = "temp.mp3", type = "audio/mp3", autoplay = NA, controls = NA, style="display:none;")
+                 ui = tags$audio(src  = r$pathFichier,
+                                 type = "audio/mp3", autoplay = NA, controls = NA, style="display:none;")
         )
     })
 
-    randomVals <- eventReactive(input$nouveauMot, {
-        r$afficherReponse <- FALSE
-        sample.int(nrow(mots), size = 1)
-    }, ignoreNULL = FALSE)
     observeEvent(input$reponse, {
         r$afficherReponse <- TRUE
     })
